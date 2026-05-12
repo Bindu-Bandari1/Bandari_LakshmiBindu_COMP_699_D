@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <h3><i class="fas fa-home"></i> Household</h3>
+
+        <a href="/household/dashboard">
+            <i class="fas fa-chart-line"></i> Dashboard
+        </a>
+
+        <a href="/household/create-request">
+            <i class="fas fa-plus"></i> Create Request
+        </a>
+
+        <a href="/household/requests" class="active">
+            <i class="fas fa-box"></i> My Requests
+        </a>
+
+        <a href="/household/history">
+            <i class="fas fa-history"></i> History
+        </a>
+
+        <a href="/household/schedule">
+            <i class="fas fa-calendar"></i> Schedule
+        </a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="admin-content">
+
+        <h2 class="title">Add Textile Item</h2>
+        <p class="subtitle">
+            Step 2: Provide item details and upload an image for AI-based condition analysis.
+        </p>
+
+        <!-- STEP FLOW -->
+        <div class="card">
+            <p><strong>Step 1:</strong> Select Request Type ✔</p>
+            <p><strong>Step 2:</strong> Add Items & Upload Image ← (Current Step)</p>
+            <p><strong>Step 3:</strong> Confirm Handling Suggestion</p>
+        </div>
+
+        <!-- FORM -->
+        <div class="card">
+
+            <form method="POST" enctype="multipart/form-data">
+
+                <div class="form-group">
+                    <label>Item Type</label>
+                    <input type="text" name="item_type" placeholder="e.g., Shirt, Blanket, Jeans" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Quantity</label>
+                    <input type="number" name="quantity" placeholder="Enter quantity" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Condition Note (Optional)</label>
+                    <input type="text" name="note" placeholder="e.g., slightly worn, torn edge">
+                </div>
+
+                <div class="form-group">
+                    <label>Upload Image</label>
+                    <input type="file" name="photo" accept="image/*" required>
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    Upload & Analyze →
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- AI INFO -->
+        <div class="card">
+            <h3><i class="fas fa-brain"></i> AI Analysis</h3>
+            <p>
+                The system uses an image classification model to evaluate the condition of your textile item.
+                Based on the image, it will suggest whether the item should be reused, repaired, or recycled.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

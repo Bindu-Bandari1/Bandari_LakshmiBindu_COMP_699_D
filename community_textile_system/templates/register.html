@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-center">
+
+    <div class="card">
+
+        <h2 class="title">Create Your Account</h2>
+        <p class="subtitle">
+            Join the Community Textile Recovery System and contribute to sustainable textile reuse and recycling.
+        </p>
+
+        <form method="POST" action="/register">
+
+            <div class="grid-2">
+
+                <!-- NAME -->
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" name="name" placeholder="Enter your full name" required>
+                </div>
+
+                <!-- EMAIL -->
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" name="email" placeholder="Enter your email" required>
+                </div>
+
+                <!-- PASSWORD -->
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="Create a password" required>
+                </div>
+
+                <!-- PHONE -->
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="text" name="phone_number" placeholder="Enter your phone number" required>
+                </div>
+
+            </div>
+
+            <!-- ADDRESS (FULL WIDTH) -->
+            <div class="form-group">
+                <label>Full Address</label>
+                <input type="text" name="address" placeholder="Enter your complete pickup address" required>
+            </div>
+
+            <button type="submit" class="btn-primary">Register</button>
+
+        </form>
+
+        <div class="extra-links">
+            <p>Already have an account?</p>
+            <a href="{{ url_for('auth.login') }}" class="btn-secondary">Login Here</a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

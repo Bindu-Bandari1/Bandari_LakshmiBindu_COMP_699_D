@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <h3><i class="fas fa-home"></i> Household</h3>
+
+        <a href="/household/dashboard">
+            <i class="fas fa-chart-line"></i> Dashboard
+        </a>
+
+        <a href="/household/create-request">
+            <i class="fas fa-plus"></i> Create Request
+        </a>
+
+        <a href="/household/requests" class="active">
+            <i class="fas fa-box"></i> My Requests
+        </a>
+
+        <a href="/household/history">
+            <i class="fas fa-history"></i> History
+        </a>
+
+        <a href="/household/schedule">
+            <i class="fas fa-calendar"></i> Schedule
+        </a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="admin-content">
+
+        <h2 class="title">My Requests</h2>
+        <p class="subtitle">
+            Track all your textile requests and view their current status.
+        </p>
+
+        <!-- SEARCH -->
+        <div class="card">
+            <form method="POST" action="/household/search" class="grid-2">
+                <input type="text" name="keyword" placeholder="Search by type or status">
+                <button class="btn-primary">Search</button>
+            </form>
+        </div>
+
+        <!-- REQUEST TABLE -->
+        <div class="card">
+
+            {% if requests %}
+            <table class="table">
+
+                <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+
+                {% for req in requests %}
+                <tr>
+                    <td>{{ req.request_id }}</td>
+                    <td>{{ req.request_type }}</td>
+                    <td>
+                        <span class="status {{ req.status }}">
+                            {{ req.status }}
+                        </span>
+                    </td>
+                    <td>{{ req.created_at }}</td>
+
+                    <td>
+                        <a href="/household/request/{{ req.request_id }}" class="btn-small">
+                            View
+                        </a>
+
+                        {% if req.status == 'pending' %}
+                        <a href="/household/cancel/{{ req.request_id }}" class="btn-danger">
+                            Cancel
+                        </a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </table>
+
+            {% else %}
+                <p>No requests found.</p>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

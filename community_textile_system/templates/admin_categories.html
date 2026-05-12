@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    <div class="sidebar">
+        <h3><i class="fas fa-user-shield"></i> Admin Panel</h3>
+
+        <a href="/admin/dashboard"><i class="fas fa-chart-line"></i> Dashboard</a>
+        <a href="/admin/areas"><i class="fas fa-map-marker-alt"></i> Service Areas</a>
+        <a href="/admin/categories" class="active"><i class="fas fa-tags"></i> Categories</a>
+        <a href="/admin/staff"><i class="fas fa-users"></i> Staff</a>
+        <a href="/admin/requests"><i class="fas fa-box"></i> Requests</a>
+    </div>
+
+    <div class="admin-content">
+
+        <h2 class="title">Textile Categories</h2>
+        <p class="subtitle">Manage types of textile items.</p>
+
+        <div class="card">
+            <h3>Add Category</h3>
+
+            <form method="POST" action="/admin/create-category">
+                <input type="text" name="category_name" placeholder="Enter category name" required>
+                <button class="btn-primary">Add Category</button>
+            </form>
+        </div>
+
+        {% if categories %}
+        <div class="card">
+            <h3>Existing Categories</h3>
+
+            <table class="table">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                </tr>
+
+                {% for c in categories %}
+                <tr>
+                    <td>{{ c.category_id }}</td>
+                    <td>{{ c.category_name }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

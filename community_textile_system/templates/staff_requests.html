@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <h3><i class="fas fa-user-cog"></i> Staff Panel</h3>
+
+        <a href="{{ url_for('staff.dashboard') }}"
+           class="{% if request.path == '/staff/dashboard' %}active{% endif %}">
+            <i class="fas fa-chart-line"></i> Dashboard
+        </a>
+
+        <a href="{{ url_for('staff.view_requests') }}"
+           class="{% if request.path == '/staff/requests' %}active{% endif %}">
+            <i class="fas fa-box"></i> Requests
+        </a>
+
+        <a href="{{ url_for('staff.my_schedule') }}"
+           class="{% if request.path == '/staff/my-schedule' %}active{% endif %}">
+            <i class="fas fa-calendar"></i> My Schedule
+        </a>
+    </div>
+
+    <!-- MAIN -->
+    <div class="admin-content">
+
+        <h2 class="title">Manage Requests</h2>
+        <p class="subtitle">
+            Review textile items, analyze AI suggestions, and manage pickup operations.
+        </p>
+
+        {% if requests %}
+
+            {% for req in requests %}
+            <div class="card">
+
+                <!-- HEADER -->
+                <h3>
+                    Request #{{ req.request_id }}
+                    <span class="status 
+                        {% if req.status == 'COMPLETED' %}approved
+                        {% elif req.status == 'SCHEDULED' %}approved
+                        {% elif req.status == 'ACCEPTED' %}pending
+                        {% else %}pending{% endif %}">
+                        {{ req.status }}
+                    </span>
+                </h3>
+
+                <!-- USER INFO -->
+                <p><strong>User:</strong> {{ req.user_name }}</p>
+                <p><strong>Email:</strong> {{ req.email }}</p>
+                <p><strong>Phone:</strong> {{ req.phone_number }}</p>
+                <p><strong>Address:</strong> {{ req.address }}</p>
+
+                <!-- ITEM INFO -->
+                <p><strong>Item:</strong> {{ req.item_type }} ({{ req.quantity }})</p>
+
+                <!-- ✅ FIXED IMAGE (FINAL) -->
+                {% if req.photo_path %}
+                <div class="image-preview">
+                    <img 
+                        src="/uploads/{{ req.photo_path.split('/')[-1] }}" 
+                        class="result-image"
+                        style="max-width:200px; border-radius:8px;">
+                </div>
+                {% endif %}
+
+                <!-- ML RESULT -->
+                <div class="card" style="background:#f9fbff;">
+                    <h4>AI Analysis</h4>
+
+                    <p>
+                        <strong>Condition:</strong> 
+                        {{ req.condition_label if req.condition_label else 'Not available' }}
+                    </p>
+
+                    <p>
+                        <strong>Confidence:</strong> 
+                        {{ req.confidence_score if req.confidence_score else 'N/A' }}
+                    </p>
+
+                    <p>
+                        <strong>Suggested Action:</strong>
+                        {% if req.condition_label == 'good' %}
+                            Reuse
+                        {% elif req.condition_label == 'worn' %}
+                            Repair
+                        {% elif req.condition_label == 'damaged' %}
+                            Recycle
+                        {% else %}
+                            Not available
+                        {% endif %}
+                    </p>
+                </div>
+
+                <!-- ACTIONS -->
+                <div class="action-group">
+
+                    {% if req.status == 'PENDING' %}
+                        <a href="{{ url_for('staff.accept', request_id=req.request_id) }}" 
+                           class="btn-small">
+                            Accept Request
+                        </a>
+                    {% endif %}
+
+                    {% if req.status == 'ACCEPTED' %}
+                        <form method="POST"
+                              action="{{ url_for('staff.schedule', request_id=req.request_id) }}"
+                              class="inline-form">
+
+                            <input type="datetime-local" name="time" required>
+                            <button class="btn-small">Schedule Pickup</button>
+                        </form>
+                    {% endif %}
+
+                    {% if req.status == 'SCHEDULED' %}
+                        <form method="POST"
+                              action="{{ url_for('staff.update_status', request_id=req.request_id) }}"
+                              class="inline-form">
+
+                            <select name="status">
+                                <option value="COMPLETED">Mark Completed</option>
+                                <option value="REJECTED">Reject</option>
+                            </select>
+
+                            <button class="btn-small">Update Status</button>
+                        </form>
+                    {% endif %}
+
+                </div>
+
+            </div>
+            {% endfor %}
+
+        {% else %}
+            <p>No requests available.</p>
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

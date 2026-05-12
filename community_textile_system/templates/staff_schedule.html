@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <h3><i class="fas fa-user-cog"></i> Staff Panel</h3>
+
+        <a href="{{ url_for('staff.dashboard') }}"
+           class="{% if request.path == '/staff/dashboard' %}active{% endif %}">
+            <i class="fas fa-chart-line"></i> Dashboard
+        </a>
+
+        <a href="{{ url_for('staff.view_requests') }}"
+           class="{% if request.path == '/staff/requests' %}active{% endif %}">
+            <i class="fas fa-box"></i> Requests
+        </a>
+
+        <a href="{{ url_for('staff.my_schedule') }}"
+           class="{% if request.path == '/staff/my-schedule' %}active{% endif %}">
+            <i class="fas fa-calendar"></i> My Schedule
+        </a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="admin-content">
+
+        <h2 class="title">My Schedule</h2>
+        <p class="subtitle">
+            View your assigned pickups and manage your daily schedule efficiently.
+        </p>
+
+        {% if schedule %}
+        <div class="card">
+
+            <table class="table">
+
+                <tr>
+                    <th>Request ID</th>
+                    <th>Scheduled Time</th>
+                    <th>Status</th>
+                </tr>
+
+                {% for s in schedule %}
+                <tr>
+                    <td>{{ s.request_id }}</td>
+
+                    <td>
+                        <i class="fas fa-clock"></i>
+                        {{ s.scheduled_time }}
+                    </td>
+
+                    <td>
+                        <span class="status 
+                            {% if s.status == 'COMPLETED' %}
+                                approved
+                            {% else %}
+                                pending
+                            {% endif %}
+                        ">
+                            {{ s.status }}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </table>
+
+        </div>
+
+        {% else %}
+        <div class="card">
+            <p>No scheduled pickups yet.</p>
+        </div>
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

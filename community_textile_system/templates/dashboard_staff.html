@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <h3><i class="fas fa-user-cog"></i> Staff Panel</h3>
+
+        <a href="{{ url_for('staff.dashboard') }}"
+           class="{% if request.path == '/staff/dashboard' %}active{% endif %}">
+            <i class="fas fa-chart-line"></i> Dashboard
+        </a>
+
+        <a href="{{ url_for('staff.view_requests') }}"
+           class="{% if request.path == '/staff/requests' %}active{% endif %}">
+            <i class="fas fa-box"></i> Requests
+        </a>
+
+        <a href="{{ url_for('staff.my_schedule') }}"
+           class="{% if request.path == '/staff/my-schedule' %}active{% endif %}">
+            <i class="fas fa-calendar"></i> My Schedule
+        </a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="admin-content">
+
+        <h2 class="title">Pickup Staff Dashboard</h2>
+        <p class="subtitle">
+            Monitor assigned requests, manage pickups, and track your schedule.
+        </p>
+
+        <!-- ================= STATS ================= -->
+        <div class="stats-grid">
+
+            <div class="stat-card blue">
+                <i class="fas fa-box"></i>
+                <h4>Total Assigned</h4>
+                <p>{{ requests|length if requests else 0 }}</p>
+            </div>
+
+            <div class="stat-card green">
+                <i class="fas fa-check-circle"></i>
+                <h4>Completed</h4>
+                <p>
+                    {% if requests %}
+                        {{ requests | selectattr('status','equalto','COMPLETED') | list | length }}
+                    {% else %}
+                        0
+                    {% endif %}
+                </p>
+            </div>
+
+            <div class="stat-card orange">
+                <i class="fas fa-clock"></i>
+                <h4>Pending</h4>
+                <p>
+                    {% if requests %}
+                        {{ requests | selectattr('status','equalto','PENDING') | list | length }}
+                    {% else %}
+                        0
+                    {% endif %}
+                </p>
+            </div>
+
+        </div>
+
+        <!-- ================= QUICK ACTIONS ================= -->
+        <div class="card">
+            <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+
+            <div class="dashboard-actions">
+                <a href="{{ url_for('staff.view_requests') }}" class="btn-primary">
+                    Manage Requests
+                </a>
+                <a href="{{ url_for('staff.my_schedule') }}" class="btn-secondary">
+                    View Schedule
+                </a>
+            </div>
+        </div>
+
+        <!-- ================= RECENT REQUESTS ================= -->
+        <div class="card">
+            <h3><i class="fas fa-list"></i> Recent Requests</h3>
+
+            {% if requests %}
+            <table class="table">
+                <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                </tr>
+
+                {% for req in requests[:5] %}
+                <tr>
+                    <td>{{ req.request_id }}</td>
+                    <td>{{ req.request_type }}</td>
+                    <td>
+                        <span class="status 
+                            {% if req.status == 'COMPLETED' %}
+                                approved
+                            {% else %}
+                                pending
+                            {% endif %}
+                        ">
+                            {{ req.status }}
+                        </span>
+                    </td>
+                    <td>{{ req.created_at }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+                <p>No assigned requests.</p>
+            {% endif %}
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <h3 class="sidebar-title">
+            <i class="fas fa-user-shield"></i> Admin Panel
+        </h3>
+
+        <a href="/admin/dashboard" class="active">
+            <i class="fas fa-chart-line"></i> Dashboard
+        </a>
+
+        <a href="/admin/areas">
+            <i class="fas fa-map-marker-alt"></i> Service Areas
+        </a>
+
+        <a href="/admin/categories">
+            <i class="fas fa-tags"></i> Categories
+        </a>
+
+        <a href="/admin/staff">
+            <i class="fas fa-users"></i> Staff Management
+        </a>
+
+        <a href="/admin/requests">
+            <i class="fas fa-box"></i> Requests
+        </a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="admin-content">
+
+        <h2 class="title">Admin Dashboard</h2>
+        <p class="subtitle">
+            Overview of system performance and quick navigation to manage operations.
+        </p>
+
+        <!-- ================= STATS ================= -->
+        <div class="stats-grid">
+
+            <div class="stat-card blue">
+                <i class="fas fa-box"></i>
+                <h4>Total Requests</h4>
+                <p>{{ requests|length if requests else 0 }}</p>
+            </div>
+
+            <div class="stat-card green">
+                <i class="fas fa-users"></i>
+                <h4>Total Staff</h4>
+                <p>{{ staff|length if staff else 0 }}</p>
+            </div>
+
+            <div class="stat-card orange">
+                <i class="fas fa-clock"></i>
+                <h4>Pending Approvals</h4>
+                <p>
+                    {% if staff %}
+                        {{ staff | selectattr('is_approved', 'equalto', 0) | list | length }}
+                    {% else %}
+                        0
+                    {% endif %}
+                </p>
+            </div>
+
+        </div>
+
+        <!-- ================= QUICK ACTIONS ================= -->
+        <div class="card">
+            <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+
+            <div class="dashboard-actions">
+                <a href="/admin/areas" class="btn-primary">Manage Areas</a>
+                <a href="/admin/categories" class="btn-primary">Manage Categories</a>
+                <a href="/admin/staff" class="btn-primary">Manage Staff</a>
+                <a href="/admin/requests" class="btn-secondary">View Requests</a>
+            </div>
+        </div>
+
+        <!-- ================= RECENT REQUESTS ================= -->
+        <div class="card">
+            <h3><i class="fas fa-list"></i> Recent Requests</h3>
+
+            {% if requests %}
+            <table class="table">
+                <tr>
+                    <th>ID</th>
+                    <th>User</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                </tr>
+
+                {% for r in requests[:5] %}
+                <tr>
+                    <td>{{ r.request_id }}</td>
+                    <td>{{ r.user_id }}</td>
+                    <td>{{ r.request_type }}</td>
+                    <td>{{ r.status }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+                <p>No requests available.</p>
+            {% endif %}
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

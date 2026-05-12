@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    <div class="sidebar">
+        <h3><i class="fas fa-user-shield"></i> Admin Panel</h3>
+
+        <a href="/admin/dashboard"><i class="fas fa-chart-line"></i> Dashboard</a>
+        <a href="/admin/areas"><i class="fas fa-map-marker-alt"></i> Service Areas</a>
+        <a href="/admin/categories"><i class="fas fa-tags"></i> Categories</a>
+        <a href="/admin/staff"><i class="fas fa-users"></i> Staff</a>
+        <a href="/admin/requests" class="active"><i class="fas fa-box"></i> Requests</a>
+    </div>
+
+    <div class="admin-content">
+
+        <h2 class="title">All Requests</h2>
+        <p class="subtitle">Monitor all textile collection requests.</p>
+
+        {% if requests %}
+        <div class="card">
+            <table class="table">
+                <tr>
+                    <th>ID</th>
+                    <th>User</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                </tr>
+
+                {% for r in requests %}
+                <tr>
+                    <td>{{ r.request_id }}</td>
+                    <td>{{ r.user_id }}</td>
+                    <td>{{ r.request_type }}</td>
+                    <td>{{ r.status }}</td>
+                    <td>{{ r.created_at }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+            <p>No requests found.</p>
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

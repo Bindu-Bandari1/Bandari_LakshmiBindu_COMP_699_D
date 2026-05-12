@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    <div class="sidebar">
+        <h3><i class="fas fa-user-shield"></i> Admin Panel</h3>
+
+        <a href="/admin/dashboard"><i class="fas fa-chart-line"></i> Dashboard</a>
+        <a href="/admin/areas" class="active"><i class="fas fa-map-marker-alt"></i> Service Areas</a>
+        <a href="/admin/categories"><i class="fas fa-tags"></i> Categories</a>
+        <a href="/admin/staff"><i class="fas fa-users"></i> Staff</a>
+        <a href="/admin/requests"><i class="fas fa-box"></i> Requests</a>
+    </div>
+
+    <div class="admin-content">
+
+        <h2 class="title">Service Areas</h2>
+        <p class="subtitle">Manage coverage areas for textile collection.</p>
+
+        <div class="card">
+            <h3>Add New Area</h3>
+
+            <form method="POST" action="/admin/create-area">
+                <input type="text" name="area_name" placeholder="Enter area name" required>
+                <button class="btn-primary">Add Area</button>
+            </form>
+        </div>
+
+        {% if areas %}
+        <div class="card">
+            <h3>Existing Areas</h3>
+
+            <table class="table">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                </tr>
+
+                {% for a in areas %}
+                <tr>
+                    <td>{{ a.area_id }}</td>
+                    <td>{{ a.area_name }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

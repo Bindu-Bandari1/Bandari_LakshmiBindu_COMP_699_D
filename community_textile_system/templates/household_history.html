@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <h3><i class="fas fa-home"></i> Household</h3>
+
+        <a href="/household/dashboard">
+            <i class="fas fa-chart-line"></i> Dashboard
+        </a>
+
+        <a href="/household/create-request">
+            <i class="fas fa-plus"></i> Create Request
+        </a>
+
+        <a href="/household/requests">
+            <i class="fas fa-box"></i> My Requests
+        </a>
+
+        <a href="/household/history" class="active">
+            <i class="fas fa-history"></i> History
+        </a>
+
+        <a href="/household/schedule">
+            <i class="fas fa-calendar"></i> Schedule
+        </a>
+    </div>
+
+    <!-- MAIN -->
+    <div class="admin-content">
+
+        <h2 class="title">Request History</h2>
+        <p class="subtitle">
+            View your completed and past textile handover records.
+        </p>
+
+        <div class="card">
+
+            {% if history %}
+            <table class="table">
+
+                <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                </tr>
+
+                {% for h in history %}
+                <tr>
+                    <td>{{ h.request_id }}</td>
+                    <td>{{ h.request_type }}</td>
+                    <td>
+                        <span class="status {{ h.status }}">
+                            {{ h.status }}
+                        </span>
+                    </td>
+                    <td>{{ h.created_at }}</td>
+                </tr>
+                {% endfor %}
+
+            </table>
+
+            {% else %}
+                <p>No history available.</p>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

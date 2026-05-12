@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <h3><i class="fas fa-home"></i> Household</h3>
+
+        <a href="/household/dashboard">
+            <i class="fas fa-chart-line"></i> Dashboard
+        </a>
+
+        <a href="/household/create-request">
+            <i class="fas fa-plus"></i> Create Request
+        </a>
+
+        <a href="/household/requests">
+            <i class="fas fa-box"></i> My Requests
+        </a>
+
+        <a href="/household/history">
+            <i class="fas fa-history"></i> History
+        </a>
+
+        <a href="/household/schedule" class="active">
+            <i class="fas fa-calendar"></i> Schedule
+        </a>
+    </div>
+
+    <!-- MAIN -->
+    <div class="admin-content">
+
+        <h2 class="title">Pickup Schedule</h2>
+        <p class="subtitle">
+            View upcoming pickup schedules and their status.
+        </p>
+
+        <div class="card">
+
+            {% if schedule %}
+            <table class="table">
+
+                <tr>
+                    <th>Request ID</th>
+                    <th>Scheduled Time</th>
+                    <th>Status</th>
+                </tr>
+
+                {% for s in schedule %}
+                <tr>
+                    <td>{{ s.request_id }}</td>
+                    <td>{{ s.scheduled_time }}</td>
+                    <td>
+                        <span class="status {{ s.status }}">
+                            {{ s.status }}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </table>
+
+            {% else %}
+                <p>No scheduled pickups available.</p>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

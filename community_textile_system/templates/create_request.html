@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <h3><i class="fas fa-home"></i> Household</h3>
+
+        <a href="/household/dashboard">
+            <i class="fas fa-chart-line"></i> Dashboard
+        </a>
+
+        <a href="/household/create-request" class="active">
+            <i class="fas fa-plus"></i> Create Request
+        </a>
+
+        <a href="/household/requests">
+            <i class="fas fa-box"></i> My Requests
+        </a>
+
+        <a href="/household/history">
+            <i class="fas fa-history"></i> History
+        </a>
+
+        <a href="/household/schedule">
+            <i class="fas fa-calendar"></i> Schedule
+        </a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="admin-content">
+
+        <h2 class="title">Create New Request</h2>
+        <p class="subtitle">
+            Step 1: Choose how you want to hand over your textile items.
+        </p>
+
+        <!-- STEP INDICATOR -->
+        <div class="card">
+            <p><strong>Step 1:</strong> Select Request Type</p>
+            <p><strong>Step 2:</strong> Add Items & Upload Images</p>
+            <p><strong>Step 3:</strong> Confirm AI Suggestions</p>
+        </div>
+
+        <!-- FORM -->
+        <div class="card">
+
+            <form method="POST" action="/household/create-request">
+
+                <div class="form-group">
+                    <label>Select Request Type</label>
+
+                    <select name="request_type" required>
+                        <option value="">-- Choose Option --</option>
+                        <option value="PICKUP">Pickup (collection from your location)</option>
+                        <option value="DROPOFF">Drop-off (you deliver items)</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    Continue to Add Items →
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- HELP SECTION -->
+        <div class="card">
+            <h3><i class="fas fa-info-circle"></i> Guidance</h3>
+            <p>
+                Pickup is recommended if you have multiple or bulky items.
+                Drop-off is faster if you are near a collection point.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

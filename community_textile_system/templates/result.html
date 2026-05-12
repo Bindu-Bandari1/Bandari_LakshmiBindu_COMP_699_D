@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <h3><i class="fas fa-home"></i> Household</h3>
+
+        <a href="/household/dashboard">
+            <i class="fas fa-chart-line"></i> Dashboard
+        </a>
+
+        <a href="/household/create-request">
+            <i class="fas fa-plus"></i> Create Request
+        </a>
+
+        <a href="/household/requests" class="active">
+            <i class="fas fa-box"></i> My Requests
+        </a>
+
+        <a href="/household/history">
+            <i class="fas fa-history"></i> History
+        </a>
+
+        <a href="/household/schedule">
+            <i class="fas fa-calendar"></i> Schedule
+        </a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="admin-content">
+
+        <h2 class="title">AI Analysis Result</h2>
+        <p class="subtitle">
+            Step 3: Review AI prediction and confirm how the item should be handled.
+        </p>
+
+        <!-- STEP FLOW -->
+        <div class="card">
+            <p><strong>Step 1:</strong> Select Request Type ✔</p>
+            <p><strong>Step 2:</strong> Upload Item & Image ✔</p>
+            <p><strong>Step 3:</strong> Confirm Handling ← (Current Step)</p>
+        </div>
+
+        <!-- IMAGE -->
+        <div class="card image-preview">
+            <img src="/{{ photo_path }}" alt="Uploaded Image" class="result-image">
+        </div>
+
+        <!-- AI RESULT -->
+        <div class="card">
+
+            <h3><i class="fas fa-brain"></i> AI Prediction</h3>
+
+            <p>
+                <strong>Condition Detected:</strong>
+                <span class="status {{ condition_label }}">
+                    {{ condition_label }}
+                </span>
+            </p>
+
+            <p>
+                <strong>Confidence Score:</strong>
+                {{ (confidence * 100) | round(2) }}%
+            </p>
+
+        </div>
+
+        <!-- SUGGESTED DECISION -->
+        <div class="card">
+
+            <h3><i class="fas fa-lightbulb"></i> Suggested Action</h3>
+
+            <p>
+                {% if condition_label == 'good' %}
+                    This item is in good condition and can be reused directly.
+                {% elif condition_label == 'worn' %}
+                    This item shows signs of wear and may require minor repair.
+                {% else %}
+                    This item is damaged and best suited for recycling.
+                {% endif %}
+            </p>
+
+        </div>
+
+        <!-- FINAL ACTION -->
+        <div class="card">
+
+            <h3><i class="fas fa-check-circle"></i> Confirm Your Choice</h3>
+
+            <div class="dashboard-actions">
+                <a href="/household/dashboard" class="btn-primary">Finish & Go to Dashboard</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

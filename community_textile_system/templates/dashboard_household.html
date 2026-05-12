@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <h3><i class="fas fa-home"></i> Household</h3>
+
+        <a href="/household/dashboard" class="active">
+            <i class="fas fa-chart-line"></i> Dashboard
+        </a>
+
+        <a href="/household/create-request">
+            <i class="fas fa-plus"></i> Create Request
+        </a>
+
+        <a href="/household/requests">
+            <i class="fas fa-box"></i> My Requests
+        </a>
+
+        <a href="/household/history">
+            <i class="fas fa-history"></i> History
+        </a>
+
+        <a href="/household/schedule">
+            <i class="fas fa-calendar"></i> Schedule
+        </a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="admin-content">
+
+        <h2 class="title">Household Dashboard</h2>
+        <p class="subtitle">
+            Overview of your textile contributions and request activity.
+        </p>
+
+        <!-- ================= STATS ================= -->
+        <div class="stats-grid">
+
+            <div class="stat-card blue">
+                <i class="fas fa-box"></i>
+                <h4>Total Requests</h4>
+                <p>{{ requests|length if requests else 0 }}</p>
+            </div>
+
+            <div class="stat-card green">
+                <i class="fas fa-check-circle"></i>
+                <h4>Completed</h4>
+                <p>
+                    {% if requests %}
+                        {{ requests | selectattr('status','equalto','COMPLETED') | list | length }}
+                    {% else %}
+                        0
+                    {% endif %}
+                </p>
+            </div>
+
+            <div class="stat-card orange">
+                <i class="fas fa-clock"></i>
+                <h4>Pending</h4>
+                <p>
+                    {% if requests %}
+                        {{ requests | selectattr('status','equalto','PENDING') | list | length }}
+                    {% else %}
+                        0
+                    {% endif %}
+                </p>
+            </div>
+
+        </div>
+
+        <!-- ================= QUICK ACTIONS ================= -->
+        <div class="card">
+            <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+
+            <div class="dashboard-actions">
+                <a href="/household/create-request" class="btn-primary">Create Request</a>
+                <a href="/household/requests" class="btn-primary">View Requests</a>
+                <a href="/household/history" class="btn-secondary">History</a>
+                <a href="/household/schedule" class="btn-secondary">Schedule</a>
+            </div>
+        </div>
+
+        <!-- ================= RECENT REQUESTS ================= -->
+        <div class="card">
+            <h3><i class="fas fa-list"></i> Recent Requests</h3>
+
+            {% if requests %}
+            <table class="table">
+
+                <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
+
+                {% for req in requests[:5] %}
+                <tr>
+                    <td>{{ req.request_id }}</td>
+                    <td>{{ req.request_type }}</td>
+
+                    <td>
+                        <span class="status 
+                            {% if req.status == 'COMPLETED' %}
+                                approved
+                            {% else %}
+                                pending
+                            {% endif %}
+                        ">
+                            {{ req.status }}
+                        </span>
+                    </td>
+
+                    <td>{{ req.created_at }}</td>
+
+                    <td>
+                        <a href="/household/request/{{ req.request_id }}" class="btn-small">View</a>
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </table>
+
+            {% else %}
+                <div class="empty-state">
+                    <p>No requests yet.</p>
+                    <a href="/household/create-request" class="btn-primary">Create Your First Request</a>
+                </div>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

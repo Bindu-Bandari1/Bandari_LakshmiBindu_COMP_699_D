@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    <div class="sidebar">
+        <h3><i class="fas fa-user-shield"></i> Admin Panel</h3>
+
+        <a href="/admin/dashboard"><i class="fas fa-chart-line"></i> Dashboard</a>
+        <a href="/admin/areas"><i class="fas fa-map-marker-alt"></i> Service Areas</a>
+        <a href="/admin/categories"><i class="fas fa-tags"></i> Categories</a>
+        <a href="/admin/staff" class="active"><i class="fas fa-users"></i> Staff</a>
+        <a href="/admin/requests"><i class="fas fa-box"></i> Requests</a>
+    </div>
+
+    <div class="admin-content">
+
+        <h2 class="title">Staff Management</h2>
+        <p class="subtitle">Create and approve pickup staff accounts.</p>
+
+        <div class="card">
+            <h3>Create Staff</h3>
+
+            <form method="POST" action="/admin/create-staff" class="grid-2">
+
+                <input type="text" name="name" placeholder="Full Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="text" name="staff_id" placeholder="Staff ID" required>
+
+                <input type="number" name="area_id" placeholder="Area ID" required>
+
+                <button class="btn-primary">Create Staff</button>
+
+            </form>
+        </div>
+
+        {% if staff %}
+        <div class="card">
+            <h3>Staff List</h3>
+
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+
+                {% for s in staff %}
+                <tr>
+                    <td>{{ s.name }}</td>
+                    <td>{{ s.email }}</td>
+                    <td>
+                        {% if s.is_approved == 1 %}
+                            <span class="status approved">Approved</span>
+                        {% else %}
+                            <span class="status pending">Pending</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if s.is_approved == 0 %}
+                            <a href="/admin/approve/{{ s.user_id }}" class="btn-small">Approve</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

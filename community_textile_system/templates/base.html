@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Community Textile Recovery System</title>
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- FONT AWESOME (ICONS) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <!-- RESPONSIVE -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="header">
+
+    <div class="logo">
+        <i class="fas fa-recycle"></i>
+        <h2>Textile Recovery</h2>
+    </div>
+
+    <nav class="nav">
+
+        <a href="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <a href="/register"><i class="fas fa-user-plus"></i> Register</a>
+
+        {% if session.get('role') == 'household' %}
+            <a href="/household/dashboard"><i class="fas fa-home"></i> Dashboard</a>
+        {% elif session.get('role') == 'staff' %}
+            <a href="/staff/dashboard"><i class="fas fa-truck"></i> Dashboard</a>
+        {% elif session.get('role') == 'admin' %}
+            <a href="/admin/dashboard"><i class="fas fa-chart-line"></i> Dashboard</a>
+        {% endif %}
+
+        {% if session.get('user_id') %}
+            <a href="/logout" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        {% endif %}
+
+    </nav>
+
+</header>
+
+<!-- ================= MAIN CONTENT ================= -->
+<main class="main-content">
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-container">
+                {% for message in messages %}
+                    <p class="flash">
+                        <i class="fas fa-info-circle"></i> {{ message }}
+                    </p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+    <p>
+        <i class="fas fa-building"></i>
+        © 2026 Bandari Solutions. All rights reserved.
+    </p>
+</footer>
+
+</body>
+</html>
