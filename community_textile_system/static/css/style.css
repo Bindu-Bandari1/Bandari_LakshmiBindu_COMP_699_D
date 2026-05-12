@@ -1,0 +1,346 @@
+/* ================= GLOBAL ================= */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #f4f6f9;
+    color: #333;
+}
+
+/* ================= HEADER ================= */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #0a1f44;
+    color: white;
+    padding: 15px 40px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo i {
+    font-size: 20px;
+}
+
+.logo h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.nav a {
+    color: white;
+    margin-left: 20px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.nav a:hover {
+    color: #cfd6ff;
+}
+
+.logout-btn {
+    color: #ff6b6b;
+}
+
+/* ================= MAIN ================= */
+.main-content {
+    padding: 30px;
+}
+
+/* ================= CONTAINERS ================= */
+.container-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.dashboard-container {
+    max-width: 1100px;
+    margin: auto;
+}
+
+/* ================= CARD ================= */
+.card {
+    background: white;
+    padding: 25px;
+    margin-bottom: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 6px 18px rgba(0,0,0,0.06);
+    transition: 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+}
+
+/* ================= TEXT ================= */
+.title {
+    font-size: 26px;
+    margin-bottom: 10px;
+    color: #0a1f44;
+}
+
+.subtitle {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* ================= FORM ================= */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+input:focus, select:focus {
+    border-color: #0a1f44;
+    outline: none;
+}
+
+/* ================= BUTTONS ================= */
+.btn-primary {
+    background: #0a1f44;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.2s;
+}
+
+.btn-primary:hover {
+    background: #163a7a;
+    transform: scale(1.03);
+}
+
+.btn-secondary {
+    background: #e3e7ed;
+    color: #333;
+    padding: 8px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+    transition: 0.2s;
+}
+
+.btn-secondary:hover {
+    background: #cfd6df;
+}
+
+.btn-small {
+    background: #4caf50;
+    color: white;
+    padding: 5px 8px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-right: 5px;
+    font-size: 12px;
+    transition: 0.2s;
+}
+
+.btn-small:hover {
+    background: #3d9440;
+}
+
+.btn-danger {
+    background: #ff4d4d;
+    color: white;
+    padding: 5px 8px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 12px;
+    transition: 0.2s;
+}
+
+.btn-danger:hover {
+    background: #cc0000;
+}
+
+/* ================= DASHBOARD ================= */
+.dashboard-actions {
+    margin-bottom: 20px;
+}
+
+.dashboard-actions a {
+    margin-right: 10px;
+}
+
+/* ================= TABLE ================= */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.table th {
+    background: #0a1f44;
+    color: white;
+    padding: 10px;
+}
+
+.table td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+/* ================= IMAGE ================= */
+.result-image {
+    width: 200px;
+    border-radius: 10px;
+}
+
+.image-preview {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* ================= FLASH ================= */
+.flash-container {
+    margin-bottom: 15px;
+}
+
+.flash {
+    background: #dff0d8;
+    padding: 12px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ================= FOOTER ================= */
+.footer {
+    text-align: center;
+    background: #0a1f44;
+    color: white;
+    padding: 15px;
+    margin-top: 30px;
+}
+
+/* ================= INLINE FORM ================= */
+.inline-form {
+    display: inline-block;
+    margin-top: 5px;
+}
+
+/* ================= ADMIN LAYOUT ================= */
+.admin-layout {
+    display: flex;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar {
+    width: 230px;
+    background: #0a1f44;
+    color: white;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.sidebar-title {
+    margin-bottom: 20px;
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+
+.sidebar a i {
+    margin-right: 10px;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background: #163a7a;
+}
+
+/* ================= CONTENT ================= */
+.admin-content {
+    flex: 1;
+    padding: 30px;
+}
+
+/* ================= STATS ================= */
+.stats-grid {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.stat-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    flex: 1;
+    text-align: center;
+    box-shadow: 0px 6px 18px rgba(0,0,0,0.06);
+}
+
+.stat-card i {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.stat-card.blue {
+    border-left: 5px solid #007bff;
+}
+
+.stat-card.green {
+    border-left: 5px solid #28a745;
+}
+
+.stat-card.orange {
+    border-left: 5px solid #ff9800;
+}
+
+/* ================= GRID ================= */
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+/* ================= STATUS ================= */
+.status.approved {
+    color: green;
+    font-weight: bold;
+}
+
+.status.pending {
+    color: orange;
+    font-weight: bold;
+}
+.action-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
